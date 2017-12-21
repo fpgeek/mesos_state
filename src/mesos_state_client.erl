@@ -293,6 +293,9 @@ resource(disk, Value) ->
 resource(ports, PortsBin) ->
   PortsStr = binary_to_list(PortsBin),
   range_to_resource(PortsStr);
+resource('gpu-set', GpuSetBin) ->
+  GpuSetStr = binary_to_list(GpuSetBin),
+  set_to_resource(GpuSetStr);
 resource(_, Value) when is_number(Value) ->
   Value.
 
@@ -308,6 +311,11 @@ range_to_resource2(Range) ->
   Start = list_to_integer(StartStr),
   End = list_to_integer(EndStr),
   lists:seq(Start, End).
+
+set_to_resource(String) ->
+    String1 = string:strip(String, left, ${),
+    String2 = string:strip(String1, right, $}),
+    string:tokens(String2, ", ").
 
 container(undefined) ->
   undefined;
