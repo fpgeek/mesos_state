@@ -110,6 +110,8 @@ label(middle, FragmentStr, Acc0) when length(Acc0) > 62 ->
     label(terminate, FragmentStr, Acc1);
 label(middle, [Char | RestFragmentStr], Acc) when Char == $- orelse Char == $_ ->
     label(middle, RestFragmentStr, [$- | Acc]);
+label(middle, [Char | RestFragmentStr], Acc) when Char == $. ->
+    label(middle, RestFragmentStr, [$. | Acc]);
 label(terminate, _Str, Acc) when length(Acc) == 63 ->
     label(terminate, [], Acc);
 label(State, [Char | RestFragmentStr], Acc) when ?ALLOWED_CHAR_GUARD(Char) ->
