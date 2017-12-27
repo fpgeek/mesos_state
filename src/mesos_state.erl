@@ -108,7 +108,7 @@ label(start, FragmentStr = [Char | _RestFragmentStr], Acc) when ?ALLOWED_CHAR_GU
 label(middle, FragmentStr, Acc0) when length(Acc0) > 62 ->
     Acc1 = string:strip(Acc0, left, $-),
     label(terminate, FragmentStr, Acc1);
-label(middle, [Char | RestFragmentStr], Acc) when Char == $- orelse Char == $_ orelse Char == $. ->
+label(middle, [Char | RestFragmentStr], Acc) when Char == $- orelse Char == $_ ->
     label(middle, RestFragmentStr, [$- | Acc]);
 label(terminate, _Str, Acc) when length(Acc) == 63 ->
     label(terminate, [], Acc);
